@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .axis{
+            stroke: #999;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body>
+    <svg width="1000" height="700">
+         <g id="coordinate">
+             <!-- x轴 -->
+             <line class="axis" x1="50" y1="600" x2="950" y2="600"></line>
+             <path d="M 925,590 L 950,600 L 925,610"></path>
+             <text x="920" y="630">时间</text>
+             <!-- y轴 -->
+             <line class="axis" x1="100" y1="650" x2="100" y2="50"></line>
+             <path d="M 90,75 L 100,50 L 110,75"></path>
+             <text x="50" y="70">订单</text>
+         </g>
+         <g id="xscale"></g>
+         <g id="yscale"></g>
+         <g id="barLine"></g>
+    </svg>
+</body>
+<script>
+        const dataBase = [{
+            data:"星期一",
+            order:"1000"
+        },{
+            data:"星期二",
+            order:"800"
+        },{
+            data:"星期三",
+            order:"1200"
+        },{
+            data:"星期四",
+            order:"600"
+        },{
+            data:"星期五",
+            order:"900"
+        },{
+            data:"星期六",
+            order:"1400"
+        },{
+            data:"星期天",
+            order:"500"
+        }]
+        console.log(dataBase);
+
+        var xscale = document.querySelector("#xscale");
+        var yscale = document.querySelector("#yscale");
+        var barLineDom = document.querySelector("#barLine")
+        
+        //获取x 和 y轴刻度的值
+        var xprogressLength = 700 / dataBase.length;
+        var yprogressLength = 450 / 14;
+        for(var i = 1; i <= dataBase.length; i++){
+            renderscale(i)
+        }
+        
+        //for循环每个刻度
+        for(var j = 1; j <= 14; j++){
+            yscale.innerHTML = yscale.innerHTML + `<line class="axis" x1="100" y1="${600 - yprogressLength * j}" x2="120" y2="${600 - yprogressLength * j}"></line>`
+            + ` <text x="50" y="${600 - yprogressLength * j}">${100*j} </text>`
+        }
+
+        function renderscale(index){
+            console.log(index);
+            var lineDom = document.createElement("line");
+            lineDom.className = "axis";
+            lineDom.setAttribute("x1",100+xprogressLength * index)
+            lineDom.setAttribute("y1","600")
+            lineDom.setAttribute("x2",100+xprogressLength * index)
+            lineDom.setAttribute("y2","580");
+            xscale.innerHTML = xscale.innerHTML + lineDom.outerHTML + ` <text x="${75+xprogressLength * index}" y="620">${dataBase[index-1].data} </text>`
+            //yscale.innerHTML = yscale.innerHTML + `<line class="axis" x1="100" y1="${600 - yprogressLength * index}" x2="120" y2="${600 - yprogressLength * index}"></line>`
+            
+            //生成随机的rgb颜色
+            var color = `rgb(${parseInt(Math.random()*255)},${parseInt(Math.random()*255)},${parseInt(Math.random()*255)})`;
+            //生成每一个柱形状
+            barLineDom.innerHTML = barLineDom.innerHTML + `<rect x="${75+xprogressLength * index}" y="${600-(yprogressLength*(dataBase[index-1].order/100))}" 
+                                                            width="50" height="${yprogressLength*(dataBase[index-1].order/100)}" fill = "${color}"></rect>`
+        }
+
+</script>
+</html>

@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        @keyframes rotate{
+           
+            0%{
+                transform: rotateZ(360,350,350);/*从0度开始*/
+            }
+            100%{
+                transform: rotateZ(0,350,350);/*360度结束*/
+            }
+        }
+        .progress{  
+            animation: rotate 6s linear infinite;
+        }
+        .text{
+            text-anchor:middle;
+            dominant-baseline:middle;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <svg xmlns="http://www.w3.org/200/svg" height="700" width="700">
+            
+            <!-- 设置底色圆环 -->
+            <circle cx="250" cy="250" r="200" fill="none" 
+            stroke="grey" stroke-width="40" stroke-linecap="round"/>
+            <!-- 设置进度条 -->
+            <circle class="progress" cx="250" cy="250" r="200" 
+            fill="none" stroke="red" stroke-width="40" stroke-linecap="round" />
+        
+            <!-- stroke-dasharray一个表示长度，一个表示间距 -->
+
+            <!-- 设置文本 -->
+            <text class="text" x="250" y="250" font-size="100" fill="red">36</text>
+        </svg>
+    </div>  
+    <script type="text/javascript" charset="utf-8">
+        var progressDom = document.querySelector(".progress")
+        var textDom = document.querySelector(".text")
+        function rotate(persent){
+            //获取svg圆环的总长
+            var circleLength = Math.floor(2 * Math.PI * parseFloat(progressDom.getAttribute("r")));
+            //按照百分比，算出进度环的长度
+            var value = persent*circleLength/100;
+
+            var red = 255 + parseInt((0-255)/100*persent);
+            var green = 0 + parseInt((191-0)/100*persent);
+            var blue = 0 + parseInt((255-0)/100*persent);
+
+            //设置stroke-dasharray路径和颜色
+            progressDom.setAttribute("stroke-dasharray",value + ",10000");
+            progressDom.setAttribute("stroke",`rgb(${red},${green},${blue})`)
+            //设置文本的颜色
+            textDom.innerHTML = persent + '%';
+            textDom.setAttribute("fill",`rgb(${red},${green},${blue})`)
+        }
+        
+        //30毫秒变化将进度+1
+        let num = 0;
+        let stopTime = setInterval(() => {
+            num ++;
+            if(num>=100){
+                num = 0
+                clearInterval(stopTime)
+            }
+            rotate(num)
+        },30)
+
+    </script>
+</body>
+</html>

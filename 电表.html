@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+            @keyframes move{
+                from
+                {transform:rotate(0deg);}
+                to
+                {transform:rotate(36deg);}
+            }
+        .box{
+            width: 230px;
+            height: 120px;
+        }
+        .heard{
+            position: relative;
+            width: 230px;
+            height: 120px;
+            background-color: black;
+        }
+        .r{
+            position: absolute;
+            top:0;
+            left: -85;
+            width: 100px;
+            height: 5px;
+            margin-top: 100px;
+            margin-left: 100px;
+            transform-origin:100px 10px;
+            animation: move 5s  ease-in-out 0s 1 alternate forwards; 
+        }
+        
+        .foor{
+            display: flex;
+            justify-content: space-between;
+        }
+        .title{
+            width: 87px;
+            height: 12px;
+            background-color: black;
+        }
+        .title span{
+            font-size: 12px;
+            font-family: Source Han Sans CN;
+            font-weight: 400;
+            color: #FEFEFE;
+            line-height: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="r">
+    </div> -->
+    <div class="box"> 
+        <div class="heard">
+            <div class="r">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:112px; height:20px; ">
+                    <path fill="#50EAD5" d="M100 2 L100 18 L20 10  Z"/>
+                    <circle cx="100" cy="10" r="8" stroke="#C4C5C4"
+                    stroke-width="4" fill="#ffffff"/>
+                    <circle cx="10" cy="10" r="4" stroke="#50EAD5"
+                    stroke-width="3" fill="#ffffff"/>
+                </svg>
+            </div>
+        </div> 
+        <div class="foor">
+            <span>0%</span>
+            <span>100%</span>
+        </div>
+        <div class="title">
+            <span>智能电表在线率</span>
+        </div>
+    </div>
+</body>
+</html>
